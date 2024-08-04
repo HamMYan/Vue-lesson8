@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 8</title>
+    <style>
+        #onTop {
+            width: 120px;
+            height: 120px;
+        }
+
+        .selClass {
+            border: solid brown 4px;
+            background-color: lightpink;
+        }
+
+        .foods {
+            width: 400px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .food {
+            margin: 10px;
+        }
+
+        .selFood {
+            border: solid brown 4px;
+            background-color: lightpink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <p>
+            <input type="range" min="0" max="1" step="0.01" v-model="opacityVal"> {{opacityVal}} (opacity value)
+        </p>
+        <div id="onTop" v-bind:style="{ backgroundColor: 'rgba(99,0,89,' + opacityVal + ')' }">
+        </div>
+        <hr><br><br>
+
+        <div class="foods">
+            <div v-for="(img,index) in images" class="food">
+                <img @click="select(index)" width="100px" :src="img.url" :class="{selFood:img.sel}" />
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    opacityVal: 0.8,
+                    images: [       
+                        { url: 'https://www.w3schools.com/vue/img_burrito.svg', sel: false },
+                        { url: 'https://www.w3schools.com/vue/img_cake.svg', sel: false },
+                        { url: 'https://www.w3schools.com/vue/img_soup.svg', sel: false },
+                        { url: 'https://www.w3schools.com/vue/img_fish.svg', sel: false },
+                        { url: 'https://www.w3schools.com/vue/img_pizza.svg', sel: false },
+                        { url: 'https://www.w3schools.com/vue/img_rice.svg', sel: false },
+                    ]
+                }
+            },
+            methods: {
+                select(number) {
+                    this.images[number].sel = !this.images[number].sel
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+
+</html>
